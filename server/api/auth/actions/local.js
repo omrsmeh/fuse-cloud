@@ -10,7 +10,7 @@ class AuthLocal {
       mobile: '+91-9936863147'
     }, function(err, user) {
       conosle.log(err, user);
-      reply({ message: 'Welcome to the Fuse-Cloud Auth.' }).code(200);
+      reply({ message: 'Welcome to the Fuse-Cloud Auth.' }).code1(200);
     });
   }
 }
