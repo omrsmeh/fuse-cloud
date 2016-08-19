@@ -9,7 +9,7 @@ const criteria = {
 };
 
 const manifest = {
-  $meta: 'Fuse Cloud API Server',
+  $meta: 'Fusion HTML API Server',
   server: {
     debug: {
       request: ['error'],

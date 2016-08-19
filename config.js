@@ -11,7 +11,7 @@ const criteria = {
 
 
 const config = {
-  $meta: 'Fuse Cloud API',
+  $meta: 'Fusion HTML API',
   projectName: 'fuse-cloud-api',
   port: {
     api: {

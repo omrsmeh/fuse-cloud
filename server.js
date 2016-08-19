@@ -51,6 +51,6 @@ Composer((err, server) => {
   // KickStart Web Server
   server.start(() => {
 
-    console.log('Fuse Cloud API Server Running on port ' + server.info.port);
+    console.log('Fusion HTML API Server Running on port ' + server.info.port);
   });
 });

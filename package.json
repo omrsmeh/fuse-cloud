@@ -1,7 +1,7 @@
 {
-  "name": "fuse-cloud-api",
+  "name": "fusion-html",
   "version": "1.0.0",
-  "description": "Fuse your cloud drives",
+  "description": "Fuse your HTML+CSS+JS",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
@@ -19,7 +19,7 @@
   },
   "homepage": "",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=4.4.7"
   },
   "dependencies": {
     "acquaint": "1.4.0",
