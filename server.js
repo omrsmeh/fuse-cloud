@@ -3,6 +3,7 @@
 const Composer = require('./index');
 const validate = require('./server/api/auth/actions/validator');
 const User     = require('./server/api/auth/model/users.model');
+const Template = require('./server/api/template/model/template.model');
 
 Composer((err, server) => {
 
@@ -45,7 +46,8 @@ Composer((err, server) => {
   server.auth.default('token');
 
   server.settings.app = {
-    'users': (new User(server.plugins['hapi-mongoose']))
+    'users': (new User(server.plugins['hapi-mongoose'])),
+    'templates': (new Template(server.plugins['hapi-mongoose'])),
   };
 
   // KickStart Web Server

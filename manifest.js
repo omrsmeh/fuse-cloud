@@ -35,7 +35,7 @@ const manifest = {
       plugin: {
         register: 'hapi-mongoose',
         options: {
-          bluebird: false,
+          bluebird: true,
           uri: 'mongodb://'+process.env.MONGOOSE_DB_PATH
         }
       }

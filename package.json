@@ -24,6 +24,7 @@
   "dependencies": {
     "acquaint": "1.4.0",
     "aws-sdk": "2.5.0",
+    "bluebird": "3.4.1",
     "confidence": "3.0.1",
     "dotenv": "2.0.0",
     "glue": "3.3.0",
@@ -33,6 +34,7 @@
     "hapi-auth-jwt2": "7.0.1",
     "hapi-mongoose": "1.0.1",
     "hoek": "4.0.2",
+    "joi": "9.0.4",
     "mongoose": "4.5.9"
   },
   "devDependencies": {
