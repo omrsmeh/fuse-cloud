@@ -13,7 +13,7 @@ class RequestVaildator {
   getListQueryValidator() {
     return {
       page: Joi.number().min(1),
-      limit: Joi.number().min(20)
+      limit: Joi.number().min(parseInt(process.env.PAGINATION_LIMIT))
     }
   }
 

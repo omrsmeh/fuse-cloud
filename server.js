@@ -25,7 +25,7 @@ Composer((err, server) => {
         error: error.output.payload.error,
         message: (error.isDeveloperError ? 'Oops! it\'s not you, it\'s us.' : error.output.payload.message)
       };
-
+      if(parseInt(process.env.SHOW_ERROR_LOG) === 1) { console.log(error); }
       return reply(ctx).code(200);
     }
 

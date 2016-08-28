@@ -39,11 +39,11 @@ class DataTemplates {
   }
 
   find(query) {
-    return this.dataTemplate.find(query).exec();
+    return this.dataTemplate.find(query);
   }
 
   findOne(query) {
-    return this.dataTemplate.findOne(query).exec();
+    return this.dataTemplate.findOne(query);
   }
 
   findHeaders() {
