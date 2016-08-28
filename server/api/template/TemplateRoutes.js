@@ -1,5 +1,7 @@
 'use strict';
-let Joi = require('joi');
+//let Joi = require('joi');
+
+let Validator  = require('./validators/request.validator');
 const basePath = '/template';
 
 module.exports = [
@@ -9,28 +11,33 @@ module.exports = [
     config: {
       auth: false,
       validate: {
-        params: {
-          type: Joi.any().valid(process.env.TEMPLATE_PARTS.split(','))
-        }
+        params: Validator.getListParameterValidator(),
+        query: Validator.getListQueryValidator()
       }
     },
-    handler: require('./actions/list').handler
+    handler: require('./actions/list')
   },
 
   {
     method: 'POST',
     path: basePath + '/create',
     config: {
-      auth: false
+      auth: false,
+      validate: {
+        payload: Validator.getPostValidator()
+      }
     },
-    handler: require('./actions/create').handler
+    handler: require('./actions/create')
   },
 
   {
     method: ['POST', 'PUT'],
     path: basePath + '/update',
     config: {
-      auth: false
+      auth: false,
+      validate: {
+        payload: Validator.getUpdateValidator()
+      }
     },
     handler: require('./actions/update').handler
   }

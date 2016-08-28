@@ -1,17 +1,44 @@
 'use strict';
 
-class ListTemplates {
+let BaseActions = require('./base.action');
 
-  handler(request, reply) {
+class ListTemplates extends BaseActions {
 
-    let headers = request.server.settings.app.templates.findHeaders();
-    headers.then((t) => {
-      return reply({error: false, data: t}).code(200);
+  constructor(request, reply) {
+    super(request, reply);
+  }
+
+  processRequest() {
+    let resource  = super.resources;
+    let parameter = super.requestParams;
+    let content   = null;
+
+    switch (parameter.type) {
+      case 'header':
+        content = resource.findHeaders();
+        break;
+      case 'footer':
+        content = resource.findFooters()
+        break;
+      case 'menu':
+      case 'popups':
+      case 'carousel':
+      case 'form':
+      case 'list':
+        content = resource.findByGroup(parameter.type);
+        break;
+    }
+
+    content.then((t) => {
+      return super.response(200, {error: false, data: t});
     })
     .catch((e) => {
-      return reply({error: true, message: e}).code(200);
+      return super.response(200, {error: true, message: e});
     })
   }
 }
 
-module.exports = new ListTemplates();
+module.exports = (request, reply) => {
+  let handler = new ListTemplates(request, reply);
+  return handler.processRequest();
+};

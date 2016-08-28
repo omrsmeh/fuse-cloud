@@ -1,16 +1,22 @@
 'use strict';
 
+let _ = require('lodash');
+
 class UpdateTemplates {
 
   handler(request, reply) {
     let newTemplate = request.server.settings.app.templates.findOne({
-      name: 'Ravi2',
-      group: 'header',
-      subgroup: 'menu'
+      "_id": request.payload.id+''
     });
 
     newTemplate.then((template) => {
       template.increment();
+      template = _.merge(template, request.payload);
+      // template.name      = request.payload.name;
+      // template.group     = request.payload.group;
+      // template.subgroup  = request.payload.subgroup;
+      // template.content   = request.payload.content;
+      // template.viewareas = request.payload.viewareas;
       return template.save();
     })
     .then((t) => {

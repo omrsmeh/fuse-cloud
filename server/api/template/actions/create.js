@@ -1,22 +1,25 @@
 'use strict';
 
-class CreateTemplates {
+let BaseActions = require('./base.action');
 
-  handler(request, reply) {
-    let newTemplate = request.server.settings.app.templates.save({
-      name: 'Ravi2',
-      group: 'head',
-      subgroup: 'menu'
-    });
+class CreateTemplates extends BaseActions {
+
+  constructor(request, reply) {
+    super(request, reply);
+  }
+
+  processRequest() {
+    let newTemplate = super.resources.save(super.requestBody);
 
     newTemplate.then((template) => {
-
-      return reply({error: false, data: template}).code(201);
-
+      return super.response(201, {error: false, data: template});
     }).catch((e) => {
-      return reply({error: true, message: e}).code(200);
+      return super.response(200, {error: true, message: e});
     })
   }
 }
 
-module.exports = new CreateTemplates();
+module.exports = (request, reply) => {
+  let creator = new CreateTemplates(request, reply);
+  creator.processRequest();
+}
