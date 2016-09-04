@@ -1,31 +1,35 @@
 'use strict';
 
 let _ = require('lodash');
+let BaseActions = require('./base.action');
 
-class UpdateTemplates {
+class UpdateTemplates extends BaseActions {
 
-  handler(request, reply) {
-    let newTemplate = request.server.settings.app.templates.findOne({
-      "_id": request.payload.id+''
+  constructor(request, reply) {
+    super(request, reply);
+  }
+
+  processRequest() {
+
+    let newTemplate = super.resources.findOne({
+      "_id": super.requestBody.id+''
     });
 
     newTemplate.then((template) => {
       template.increment();
-      template = _.merge(template, request.payload);
-      // template.name      = request.payload.name;
-      // template.group     = request.payload.group;
-      // template.subgroup  = request.payload.subgroup;
-      // template.content   = request.payload.content;
-      // template.viewareas = request.payload.viewareas;
+      template = _.merge(template, super.requestBody);
       return template.save();
     })
     .then((t) => {
-      return reply({error: false, data: t}).code(200);
+      return super.response(200, {error: false, data: t});
     })
     .catch((e) => {
-      return reply({error: true, message: e}).code(200);
-    })
+      return super.response(200, {error: true, message: e});
+    });
   }
 }
 
-module.exports = new UpdateTemplates();
+module.exports = (request, reply) => {
+  let creator = new UpdateTemplates(request, reply);
+  creator.processRequest();
+}

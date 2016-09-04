@@ -39,6 +39,6 @@ module.exports = [
         payload: Validator.getUpdateValidator()
       }
     },
-    handler: require('./actions/update').handler
+    handler: require('./actions/update')
   }
 ]
