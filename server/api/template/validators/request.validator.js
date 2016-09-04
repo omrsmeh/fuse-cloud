@@ -21,7 +21,7 @@ class RequestVaildator {
     return {
       name: Joi.string().min(5).max(35).required(),
       group: Joi.any().valid(process.env.TEMPLATE_PARTS.split(',')).required(),
-      subgroup: Joi.string().min(5).max(35),
+      subgroup: Joi.string().min(3).max(35),
       content: Joi.object().keys({
         html: Joi.string().required(),
         css: Joi.string(),
