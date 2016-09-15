@@ -18,6 +18,9 @@ Composer((err, server) => {
     let response = request.response;
 
     if (response.isBoom) {
+      if (response.output.statusCode === 401) {
+        return reply.redirect('/');
+      }
       // Replace error
       let error = response;
       let ctx = {
@@ -39,20 +42,51 @@ Composer((err, server) => {
     key: new Buffer(process.env.AUTH_CLIENT_SECRET, 'base64'),
     validateFunc: validate,
     verifyOptions: {
-      algorithms: [ 'HS256' ]
+      algorithms: [ 'HS256' ],
+      audience: process.env.AUTH_CLIENT_AUDIENCE
     }
+  });
+
+  server.auth.strategy('bellauth', 'bell', {
+    provider: 'auth0',
+    location: 'http://localhost:9000/auth',
+    config: {domain: 'omrsmeh.auth0.com'},
+    password: 'yTDbYctgnWPB6oormQ8W_PjL__XnTWjKoTET5Y-f_tJ6iSCOVt9UzHUWl3MoBUMx',
+    clientId: 'xt2iij0FvfJroGkMNE67lZFL42q9IDH2',
+    clientSecret: '5udWohq7kqcGKNmQl0wJdSRYqyFbGzSLWDe8eev48odYl42zrfYwVcTr-8Yer779',
+    isSecure: false     // Terrible idea but required if not using HTTPS especially if developing locally
   });
 
   server.auth.default('token');
 
-  server.settings.app = {
-    'users': (new User(server.plugins['hapi-mongoose'])),
-    'templates': (new Template(server.plugins['hapi-mongoose'])),
-  };
+  // Register all routes here because they pre-loads
+  // and strategy are post-load which cause
+  // error and API is load
+  server.register({
+    register: require('acquaint'),
+    options: {
+      relativeTo: __dirname,
+      routes: [
+        {
+          includes: [
+            './server/api/**/*Routes.js',
+            './server/api/index.js'
+          ]
+        }
+      ],
+    }
+  }, (err) => {
 
-  // KickStart Web Server
-  server.start(() => {
+    // Setting App models
+    server.settings.app = {
+      'users': (new User(server.plugins['hapi-mongoose'])),
+      'templates': (new Template(server.plugins['hapi-mongoose'])),
+    };
 
-    console.log('Fusion HTML API Server Running on port ' + server.info.port);
+    // KickStart Web Server
+    server.start(() => {
+      console.log('Fusion HTML API Server Running on port ' + server.info.port);
+    });
   });
+
 });

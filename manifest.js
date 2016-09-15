@@ -28,6 +28,11 @@ const manifest = {
   registrations: [
     {
       plugin: {
+        register: 'bell'
+      }
+    },
+    {
+      plugin: {
         register: 'hapi-auth-jwt2'
       }
     },
@@ -79,22 +84,6 @@ const manifest = {
               }]
             }]
           }
-        }
-      }
-    },
-    {
-      plugin: {
-        register: 'acquaint',
-        options: {
-          relativeTo: __dirname,
-          routes: [
-            {
-              includes: [
-                './server/api/**/*Routes.js',
-                './server/api/index.js'
-              ]
-            }
-          ],
         }
       }
     }

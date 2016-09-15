@@ -9,7 +9,7 @@ module.exports = [
     method: 'GET',
     path: basePath + '/list/{type?}',
     config: {
-      auth: false,
+      // auth: true,
       validate: {
         params: Validator.getListParameterValidator(),
         query: Validator.getListQueryValidator()
