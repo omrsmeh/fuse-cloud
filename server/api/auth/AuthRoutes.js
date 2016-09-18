@@ -16,7 +16,7 @@ let AuthRoutes = [
     config: {
       auth: 'bellauth'
     },
-    handler: require('./actions/local').handler
+    handler: require('./actions/local')
   }
 ];
 

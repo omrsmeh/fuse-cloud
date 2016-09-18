@@ -1,15 +1,24 @@
 'use strict';
 
-class AuthLocal {
+let ApiBaseActions = require('./../../apibase.actions');
 
-  handler(request, reply) {
-    console.log(!request.auth, request.auth);
-    return reply({
-      params: request.params,
-      payload: request.payload,
-      body: request.body
-    }).code(200);
+class AuthLocal extends ApiBaseActions {
+
+  constructor(request, reply) {
+    super(request, reply);
+  }
+
+  processRequest() {
+    console.log(!super.isAuthenticated, super.isAuthenticated);
+    return super.response(200, {
+      params: super.requestQuery,
+      payload: super.requestParams,
+      body: super.requestBody
+    });
   }
 }
 
-module.exports = new AuthLocal();
+module.exports = (request, reply) => {
+  let creator = new AuthLocal(request, reply);
+  creator.processRequest();
+}
