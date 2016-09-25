@@ -81,6 +81,17 @@ Composer((err, server) => {
       ],
     }
   }, (err) => {
+    
+    // Settings to make authentication cookie 
+    // session based
+    server.state(process.env.AUTH_COOKIE_NAME, {
+      ttl: null,
+      isSecure: true,
+      isHttpOnly: true,
+      encoding: 'base64json',
+      clearInvalid: false, // remove invalid cookies
+      strictHeader: true // don't allow violations of RFC 6265
+    });
 
     // Setting App models
     server.settings.app = {

@@ -35,6 +35,11 @@ class ApiBaseActions {
     return this.apiLogger;
   }
 
+  responseCookie(cookieName, cookieValue) {
+    
+    this.response.state(cookieName, cookieValue);
+  }
+  
   response(statusCode, responseBody) {
     return this.response(responseBody).code(statusCode);
   }

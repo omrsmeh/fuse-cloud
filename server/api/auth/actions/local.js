@@ -25,6 +25,7 @@ class AuthLocal extends ApiBaseActions {
         audience: process.env.AUTH_CLIENT_AUDIENCE
       });
 
+      super.responseCookie(process.env.AUTH_COOKIE_NAME, _jwtSign);
       return super.response(200, {"token": _jwtSign});
     }
     else {
