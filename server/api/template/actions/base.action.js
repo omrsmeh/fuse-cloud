@@ -5,10 +5,10 @@ let ApiBaseActions = require('./../../apibase.actions');
 class BaseTemplateActions extends ApiBaseActions {
 
   constructor(request, reply) {
-    this.dbResorce = request.server.settings.app.templates;
     super(request, reply);
+    this.dbResorce = request.server.settings.app.templates;
   }
-  
+
   get resources() {
     return this.dbResorce
   }

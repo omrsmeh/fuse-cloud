@@ -1,8 +1,7 @@
 'use strict';
 
 const AuthValidator = function (decoded, request, callback) {
-  console.log(request, decoded);
-  return callback(null, true)
+  return callback(null, (decoded.id && decoded.email));
 };
 
 module.exports = AuthValidator;

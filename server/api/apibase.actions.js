@@ -1,10 +1,13 @@
 'use strict';
 
+let ApiLogger = require('./apilogger');
+
 class ApiBaseActions {
 
   constructor(request, reply) {
     this.request   = request;
     this.response  = reply;
+    this.apiLogger = new ApiLogger();
   }
 
   get requestBody() {
@@ -22,6 +25,14 @@ class ApiBaseActions {
   get isAuthenticated() {
     let _r = this.request;
     return (_r.auth && (_r.auth.isAuthenticated === true));
+  }
+
+  get authObject() {
+    return this.request.auth;
+  }
+  
+  get logger() {
+    return this.apiLogger;
   }
 
   response(statusCode, responseBody) {

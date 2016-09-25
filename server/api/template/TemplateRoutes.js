@@ -9,7 +9,6 @@ module.exports = [
     method: 'GET',
     path: basePath + '/list/{type?}',
     config: {
-      // auth: true,
       validate: {
         params: Validator.getListParameterValidator(),
         query: Validator.getListQueryValidator()
@@ -22,7 +21,6 @@ module.exports = [
     method: 'POST',
     path: basePath + '/create',
     config: {
-      auth: false,
       validate: {
         payload: Validator.getPostValidator()
       }
@@ -34,7 +32,6 @@ module.exports = [
     method: ['POST', 'PUT'],
     path: basePath + '/update',
     config: {
-      auth: false,
       validate: {
         payload: Validator.getUpdateValidator()
       }

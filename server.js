@@ -19,7 +19,8 @@ Composer((err, server) => {
 
     if (response.isBoom) {
       if (response.output.statusCode === 401) {
-        return reply.redirect('/');
+        reply.state("auth-requester", request.url.href);
+        return reply.redirect('/auth/');
       }
       // Replace error
       let error = response;
@@ -28,7 +29,7 @@ Composer((err, server) => {
         error: error.output.payload.error,
         message: (error.isDeveloperError ? 'Oops! it\'s not you, it\'s us.' : error.output.payload.message)
       };
-      if(parseInt(process.env.SHOW_ERROR_LOG) === 1) { console.log(error); }
+      if(parseInt(process.env.ALLOW_DEBUG) === 1) { console.log(error); }
       return reply(ctx).code(200);
     }
 
@@ -42,7 +43,7 @@ Composer((err, server) => {
     key: new Buffer(process.env.AUTH_CLIENT_SECRET, 'base64'),
     validateFunc: validate,
     verifyOptions: {
-      algorithms: [ 'HS256' ],
+      algorithms: process.env.TOKEN_ALGORITHS.split(','),
       audience: process.env.AUTH_CLIENT_AUDIENCE
     }
   });
@@ -51,10 +52,14 @@ Composer((err, server) => {
     provider: 'auth0',
     location: 'http://localhost:9000/auth',
     config: {domain: 'omrsmeh.auth0.com'},
-    password: 'yTDbYctgnWPB6oormQ8W_PjL__XnTWjKoTET5Y-f_tJ6iSCOVt9UzHUWl3MoBUMx',
-    clientId: 'xt2iij0FvfJroGkMNE67lZFL42q9IDH2',
-    clientSecret: '5udWohq7kqcGKNmQl0wJdSRYqyFbGzSLWDe8eev48odYl42zrfYwVcTr-8Yer779',
-    isSecure: false     // Terrible idea but required if not using HTTPS especially if developing locally
+    password: process.env.AUTH_PASSWORD,
+    clientId: process.env.AUTH_CLIENT_AUDIENCE,
+    clientSecret: process.env.AUTH_CLIENT_SECRET,
+    scope(request) {
+      console.log(request.headers);
+    },
+    // Terrible idea but required if not using HTTPS especially if developing locally
+    isSecure: false
   });
 
   server.auth.default('token');

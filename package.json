@@ -36,6 +36,7 @@
     "hapi-mongoose": "1.0.1",
     "hoek": "4.0.2",
     "joi": "9.0.4",
+    "jsonwebtoken": "7.1.9",
     "lodash": "4.15.0",
     "mongoose": "4.5.9"
   },
